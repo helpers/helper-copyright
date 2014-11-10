@@ -15,7 +15,19 @@ npm i helper-copyright --save
 npm test
 ```
 
-## Example usage
+## Usage example
+
+Add a copyright statement, with author and year(s) in effect:
+
+```js
+{%= copyright() %}
+//=> Copyright (c) 2014 Jon Schlinkert.
+
+{%= copyright({year: 2012}) %}
+//=> Copyright (c) 2012-2014 Jon Schlinkert.
+```
+
+## Register
 
 > This should work with any engine, here are a few examples
 
@@ -44,18 +56,19 @@ var handlebars = require('handlebars');
 handlebars.registerHelper('copyright', require('helper-copyright'));
 ```
 
+
 ## Contributing
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/jonschlinkert/helper-copyright/issues)
 
 ## Author
 
 **[object Object]**
- 
+
 + [github/jonschlinkert](https://github.com/jonschlinkert)
-+ [twitter/jonschlinkert](http://twitter.com/jonschlinkert) 
++ [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
 
 ## License
-Copyright (c) 2014 Jon Schlinkert  
+Copyright (c) 2014 Jon Schlinkert
 Released under the MIT license
 
 ***
