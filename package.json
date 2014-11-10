@@ -1,0 +1,37 @@
+{
+  "name": "helper-copyright",
+  "description": "Template helper for adding a basic, one-line copyright statement, with formatting appropriate for LICENSE/LICENSE-MIT or README templates. Should work with any Handlebars, Lo-Dash, underscore, or any template engine that allows helper functions to be registered.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/helper-copyright",
+  "author": {
+    "name": "Jon Schlinkert",
+    "url": "https://github.com/jonschlinkert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonschlinkert/helper-copyright.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/helper-copyright/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jonschlinkert/helper-copyright/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "handlebars": "^2.0.0",
+    "should": "^4.2.1"
+  }
+}
