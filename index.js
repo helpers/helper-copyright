@@ -21,8 +21,8 @@ module.exports = function (locals) {
   var context = {};
 
   // compatibility with template, verb and assemble.
-  if (this && this.root && this.context) {
-    context = _.merge({}, this.root.cache.data, this.context);
+  if (this && this.app && this.context) {
+    context = _.merge({}, this.app.cache.data, this.context);
   }
 
   var ctx = _.merge({author: {}}, context, locals);
