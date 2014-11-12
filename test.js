@@ -23,6 +23,11 @@ describe('helper copyright', function () {
     _.template('<%= copyright({author: author}) %>', locals, {imports: {copyright: copyrightHelper}}).should.eql('Copyright (c) 2014 Jon Schlinkert  ');
   });
 
+  it('should work as a lodash mixin:', function () {
+    _.mixin({copyright: copyrightHelper});
+    _.template('<%= _.copyright({author: author}) %>', locals).should.eql('Copyright (c) 2014 Jon Schlinkert  ');
+  });
+
   it('should work as a handlebars helper:', function () {
     handlebars.registerHelper('copyright', copyrightHelper);
 
