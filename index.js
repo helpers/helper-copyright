@@ -36,9 +36,16 @@ module.exports = function (locals) {
 
   // add author string
   str += ' ';
-  str += (typeof ctx.author === 'string')
-    ? ctx.author
-    : ctx.author.name;
+
+  var author = (typeof ctx.author === 'string') ? ctx.author : ctx.author.name;
+
+  str += author;
+
+  if (ctx.linkify === true && (ctx.author.url || ctx.author.twitter)) {
+    var mdu = require('markdown-utils');
+    var link = mdu.link(author, (ctx.author.url || ctx.author.twitter))
+    str = str.replace(author, link)
+  }
 
   // Keep spaces at the end to ensure that
   // a newline is retained by any md renderer

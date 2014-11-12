@@ -28,7 +28,8 @@
     "test": "mocha -R spec"
   },
   "dependencies": {
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "markdown-utils": "^0.1.1"
   },
   "devDependencies": {
     "handlebars": "^2.0.0",
