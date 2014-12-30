@@ -7,7 +7,7 @@ var _ = require('lodash');
  *
  * ```js
  * {%= copyright() %}
- * //=> Copyright (c) 2014 Jon Schlinkert.
+ * //=> Copyright (c) 2014-2015, Jon Schlinkert.
  *
  * {%= copyright({year: 2012}) %}
  * //=> Copyright (c) 2012-2014 Jon Schlinkert.
@@ -32,7 +32,9 @@ module.exports = function (locals) {
   // if `year` is passed, create a date range
   str += ctx.year
     ? (ctx.year + '-' + current)
-    : current;
+    : ctx.years
+      ? ctx.years
+      : current;
 
   // add author string
   str += ' ';

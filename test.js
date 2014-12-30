@@ -1,7 +1,7 @@
 /*!
  * helper-copyright <https://github.com/jonschlinkert/helper-copyright>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Copyright (c) 2014-2015, Jon Schlinkert.
  * Licensed under the MIT License
  */
 
@@ -17,6 +17,16 @@ var locals = {author: {name: 'Jon Schlinkert', url: 'https://github.com/jonschli
 describe('helper copyright', function () {
   it('should return a formatted copyright statement:', function () {
     copyrightHelper(locals).should.eql('Copyright (c) 2014 Jon Schlinkert  ');
+  });
+
+  it('should update the start year:', function () {
+    var ctx = {author: {name: 'Jon Schlinkert', url: 'https://github.com/jonschlinkert'}, year: '2013'};
+    copyrightHelper(ctx).should.eql('Copyright (c) 2013-2014 Jon Schlinkert  ');
+  });
+
+  it('should update the range of years:', function () {
+    var ctx = {author: {name: 'Jon Schlinkert', url: 'https://github.com/jonschlinkert'}, years: '2013-2020'};
+    copyrightHelper(ctx).should.eql('Copyright (c) 2013-2020 Jon Schlinkert  ');
   });
 
   it('should work as a lodash helper:', function () {
