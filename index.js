@@ -32,14 +32,14 @@ module.exports = function (locals) {
   // if `year` is passed, create a date range
   str += ctx.year
     ? (ctx.year + '-' + current)
-    : ctx.years
-      ? ctx.years
-      : current;
+    : (ctx.years ? ctx.years : current);
 
   // add author string
   str += ' ';
 
-  var author = (typeof ctx.author === 'string') ? ctx.author : ctx.author.name;
+  var author = (typeof ctx.author === 'string')
+    ? ctx.author
+    : ctx.author.name;
 
   str += author;
 
