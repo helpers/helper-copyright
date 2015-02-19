@@ -1,6 +1,13 @@
+/*!
+ * helper-copyright <https://github.com/helpers/helper-copyright>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
 'use strict';
 
-var _ = require('lodash');
+var merge = require('merge-deep');
 
 /**
  * Add a copyright statement, with author and year(s) in effect.
@@ -22,12 +29,17 @@ module.exports = function (locals) {
 
   // compatibility with template, verb and assemble.
   if (this && this.app && this.context) {
-    context = _.merge({}, this.app.cache.data, this.context);
+    context = merge({}, this.app.cache.data, this.context);
   }
 
-  var ctx = _.merge({author: {}}, context, locals);
+  var ctx = merge({author: {}}, context, locals);
   var current = new Date().getFullYear();
   var str = 'Copyright (c) ';
+
+  if (ctx.copyright) {
+    ctx = merge(ctx, ctx.copyright);
+    ctx.year = ctx.first || ctx.year;
+  }
 
   // if `year` is passed, create a date range
   str += ctx.year
