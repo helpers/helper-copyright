@@ -1,13 +1,13 @@
 /*!
- * helper-copyright <https://github.com/jonschlinkert/helper-copyright>
+ * helper-copyright <https://github.com/helpers/helper-copyright>
  *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
  */
 
 'use strict';
 
-var should = require('should');
+require('should');
 var handlebars = require('handlebars');
 var _ = require('lodash');
 var copyrightHelper = require('./');

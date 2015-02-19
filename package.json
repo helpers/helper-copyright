@@ -1,7 +1,7 @@
 {
   "name": "helper-copyright",
   "description": "Template helper for adding a basic, one-line copyright statement, with formatting appropriate for LICENSE/LICENSE-MIT or README templates. Used with Verb, but should work with any Handlebars, Lo-Dash, underscore, or any template engine that allows helper functions to be registered.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "homepage": "https://github.com/helpers/helper-copyright",
   "author": {
     "name": "Jon Schlinkert",
@@ -14,25 +14,26 @@
   "bugs": {
     "url": "https://github.com/helpers/helper-copyright/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/helpers/helper-copyright/blob/master/LICENSE-MIT"
-  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/helpers/helper-copyright/blob/master/LICENSE"
+    }
+  ],
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha -R spec",
-    "docs": "update && license && npmignore && deps && verb",
-    "all": "npm run test && npm run docs"
+    "test": "mocha"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
-    "markdown-utils": "^0.3.0"
+    "markdown-utils": "^0.3.0",
+    "merge-deep": "^0.1.5"
   },
   "devDependencies": {
     "handlebars": "^2.0.0",
+    "lodash": "^3.2.0",
     "should": "^4.2.1"
   }
 }
