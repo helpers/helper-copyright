@@ -24,7 +24,7 @@ var merge = require('merge-deep');
  * @return {String} Complete copyright statement.
  */
 
-module.exports = function (locals) {
+module.exports = function copyright(locals) {
   var context = {};
 
   // compatibility with template, verb and assemble.
@@ -41,24 +41,29 @@ module.exports = function (locals) {
     ctx.year = ctx.first || ctx.year;
   }
 
-  // if `year` is passed, create a date range
-  str += ctx.year
-    ? (ctx.year + '-' + current)
-    : (ctx.years ? ctx.years : current);
+  // start year of a project. if `year` is passed,
+  // create a date range
+  ctx.year = +(ctx.start || ctx.year);
+
+  if (ctx.year && current && ctx.year < +current) {
+    str += ctx.year + '-' + current;
+  } else if (ctx.years) {
+    str += ctx.years;
+  } else {
+    str += current;
+  }
 
   // add author string
-  str += ' ';
-
   var author = (typeof ctx.author === 'string')
     ? ctx.author
     : ctx.author.name;
 
-  str += author;
+  str += ' ' + author;
 
   if (ctx.linkify === true && (ctx.author.url || ctx.author.twitter)) {
     var mdu = require('markdown-utils');
-    var link = mdu.link(author, (ctx.author.url || ctx.author.twitter))
-    str = str.replace(author, link)
+    var link = mdu.link(author, (ctx.author.url || ctx.author.twitter));
+    str = str.replace(author, link);
   }
 
   // Keep spaces at the end to ensure that

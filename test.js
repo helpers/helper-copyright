@@ -9,19 +9,21 @@
 
 require('should');
 var handlebars = require('handlebars');
-var _ = require('lodash');
 var copyrightHelper = require('./');
+var _ = require('lodash');
+
+var year = new Date().getFullYear();
 
 var locals = {author: {name: 'Jon Schlinkert', url: 'https://github.com/jonschlinkert'}};
 
 describe('helper copyright', function () {
   it('should return a formatted copyright statement:', function () {
-    copyrightHelper(locals).should.eql('Copyright (c) 2014 Jon Schlinkert  ');
+    copyrightHelper(locals).should.eql('Copyright (c) '+ year + ' Jon Schlinkert  ');
   });
 
   it('should update the start year:', function () {
     var ctx = {author: {name: 'Jon Schlinkert', url: 'https://github.com/jonschlinkert'}, year: '2013'};
-    copyrightHelper(ctx).should.eql('Copyright (c) 2013-2014 Jon Schlinkert  ');
+    copyrightHelper(ctx).should.eql('Copyright (c) 2013-'+ year + ' Jon Schlinkert  ');
   });
 
   it('should update the range of years:', function () {
@@ -30,35 +32,34 @@ describe('helper copyright', function () {
   });
 
   it('should work as a lodash helper:', function () {
-    _.template('<%= copyright({author: author}) %>', locals, {imports: {copyright: copyrightHelper}}).should.eql('Copyright (c) 2014 Jon Schlinkert  ');
+    _.template('<%= copyright({author: author}) %>', {imports: {copyright: copyrightHelper}})(locals).should.eql('Copyright (c) ' + year + ' Jon Schlinkert  ');
   });
 
   it('should work as a lodash mixin:', function () {
     _.mixin({copyright: copyrightHelper});
-    _.template('<%= _.copyright({author: author}) %>', locals).should.eql('Copyright (c) 2014 Jon Schlinkert  ');
+    _.template('<%= _.copyright({author: author}) %>')(locals).should.eql('Copyright (c) '+ year + ' Jon Schlinkert  ');
   });
 
   it('should work as a handlebars helper:', function () {
     handlebars.registerHelper('copyright', copyrightHelper);
-
-    handlebars.compile('{{copyright this}}')(locals).should.eql('Copyright (c) 2014 Jon Schlinkert  ');
+    handlebars.compile('{{copyright this}}')(locals).should.eql('Copyright (c) '+ year + ' Jon Schlinkert  ');
   });
 });
 
 describe('when `linkify` is `true`:', function () {
   it('should return a formatted copyright statement:', function () {
     locals = _.extend({linkify: true}, locals);
-    copyrightHelper(locals).should.eql('Copyright (c) 2014 [Jon Schlinkert](https://github.com/jonschlinkert)  ');
+    copyrightHelper(locals).should.eql('Copyright (c) ' + year + ' [Jon Schlinkert](https://github.com/jonschlinkert)  ');
   });
 
   it('should work as a lodash helper:', function () {
-    _.template('<%= copyright({author: author, linkify: true}) %>', locals, {imports: {copyright: copyrightHelper}}).should.eql('Copyright (c) 2014 [Jon Schlinkert](https://github.com/jonschlinkert)  ');
+    _.template('<%= copyright({author: author, linkify: true}) %>', {imports: {copyright: copyrightHelper}})(locals).should.eql('Copyright (c) ' + year + ' [Jon Schlinkert](https://github.com/jonschlinkert)  ');
   });
 
   it('should work as a handlebars helper:', function () {
     locals = _.extend({linkify: true}, locals);
     handlebars.registerHelper('copyright', copyrightHelper);
 
-    handlebars.compile('{{copyright this}}')(locals).should.eql('Copyright (c) 2014 [Jon Schlinkert](https://github.com/jonschlinkert)  ');
+    handlebars.compile('{{copyright this}}')(locals).should.eql('Copyright (c) '+ year + ' [Jon Schlinkert](https://github.com/jonschlinkert)  ');
   });
 });
