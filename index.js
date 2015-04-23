@@ -7,6 +7,7 @@
 
 'use strict';
 
+var mdu = require('markdown-utils');
 var merge = require('merge-deep');
 
 /**
@@ -25,10 +26,27 @@ var merge = require('merge-deep');
  */
 
 module.exports = function copyright(locals) {
+  var app = this && this.app;
   var context = {};
 
+  // if a string is passed, assume it's a generated copyright statement
+  if (typeof locals === 'string') {
+    if (app && app.set) {
+      app.set('data.copyright.statement', locals);
+    }
+    return locals;
+  }
+
+  // return already-complete statements
+  if (locals && locals.statement) {
+    if (app && app.set) {
+      app.set('data.copyright.statement', locals.statement);
+    }
+    return locals.statement;
+  }
+
   // compatibility with template, verb and assemble.
-  if (this && this.app && this.context) {
+  if (app && this.context) {
     context = merge({}, this.app.cache.data, this.context);
   }
 
@@ -61,12 +79,12 @@ module.exports = function copyright(locals) {
   str += ' ' + author;
 
   if (ctx.linkify === true && (ctx.author.url || ctx.author.twitter)) {
-    var mdu = require('markdown-utils');
     var link = mdu.link(author, (ctx.author.url || ctx.author.twitter));
-    str = str.replace(author, link);
+    str = str.split(author).join(link);
   }
 
-  // Keep spaces at the end to ensure that
-  // a newline is retained by any md renderer
-  return str + '  ';
+  if (app && app.set) {
+    app.set('data.copyright.statement', str);
+  }
+  return str;
 };
