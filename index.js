@@ -51,6 +51,11 @@ module.exports = function copyright(locals) {
   }
 
   var ctx = merge({author: {}}, context, locals);
+
+  if (typeof ctx.copyright === 'string' && ctx.copyright.indexOf('Copyright') !== -1) {
+    return ctx.copyright;
+  }
+
   var current = new Date().getFullYear();
   var str = 'Copyright (c) ';
 
