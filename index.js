@@ -31,26 +31,22 @@ module.exports = function copyright(locals) {
 
   // if a string is passed, assume it's a generated copyright statement
   if (typeof locals === 'string') {
-    if (app && app.set) {
-      app.set('data.copyright.statement', locals);
-    }
+    if (app) app.set('data.copyright.statement', locals);
     return locals;
   }
 
   // return already-complete statements
-  if (locals && locals.statement) {
-    if (app && app.set) {
-      app.set('data.copyright.statement', locals.statement);
-    }
+  if (locals && typeof locals.statement === 'string') {
+    if (app) app.set('data.copyright.statement', locals.statement);
     return locals.statement;
   }
 
   // compatibility with template, verb and assemble.
-  if (app && this.context) {
+  if (app && app.cache) {
     context = merge({}, this.app.cache.data, this.context);
   }
 
-  var ctx = merge({author: {}}, context, locals);
+  var ctx = merge({}, {author: {}}, context, locals);
 
   if (typeof ctx.copyright === 'string' && ctx.copyright.indexOf('Copyright') !== -1) {
     return ctx.copyright;
