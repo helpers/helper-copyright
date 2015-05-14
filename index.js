@@ -15,10 +15,10 @@ var merge = require('merge-deep');
  *
  * ```js
  * {%= copyright() %}
- * //=> Copyright (c) 2014-2015, Jon Schlinkert.
+ * //=> Copyright © 2014-2015, Jon Schlinkert.
  *
  * {%= copyright({year: 2012}) %}
- * //=> Copyright (c) 2012-2014 Jon Schlinkert.
+ * //=> Copyright © 2012-2014 Jon Schlinkert.
  * ```
  *
  * @param  {Number} `year` Optionally pass the start year of the project.
@@ -53,7 +53,7 @@ module.exports = function copyright(locals) {
   }
 
   var current = new Date().getFullYear();
-  var str = 'Copyright (c) ';
+  var str = 'Copyright © ';
 
   if (ctx.copyright) {
     ctx = merge(ctx, ctx.copyright);
