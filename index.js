@@ -7,8 +7,7 @@
 
 'use strict';
 
-var mdu = require('markdown-utils');
-var merge = require('merge-deep');
+var utils = require('./utils');
 
 /**
  * Add a copyright statement, with author and year(s) in effect.
@@ -25,67 +24,51 @@ var merge = require('merge-deep');
  * @return {String} Complete copyright statement.
  */
 
-module.exports = function copyright(locals) {
-  var app = this && this.app;
-  var context = {};
+module.exports = function(options) {
+  var opts = utils.merge({}, options);
 
-  // if a string is passed, assume it's a generated copyright statement
-  if (typeof locals === 'string') {
-    if (app) app.set('data.copyright.statement', locals);
-    return locals;
-  }
+  return function copyright(locals) {
+    var context = {};
+    if (this && this.context) {
+      context = this.context;
+    }
 
-  // return already-complete statements
-  if (locals && typeof locals.statement === 'string') {
-    if (app) app.set('data.copyright.statement', locals.statement);
-    return locals.statement;
-  }
+    var ctx = utils.merge({}, {author: {}}, opts, context, locals);
 
-  // compatibility with template, verb and assemble.
-  if (app && app.cache) {
-    context = merge({}, this.app.cache.data, this.context);
-  }
+    if (typeof ctx.copyright === 'string' && ctx.copyright.indexOf('Copyright') !== -1) {
+      return ctx.copyright;
+    }
 
-  var ctx = merge({}, {author: {}}, context, locals);
+    var current = new Date().getFullYear();
+    var str = 'Copyright © ';
 
-  if (typeof ctx.copyright === 'string' && ctx.copyright.indexOf('Copyright') !== -1) {
-    return ctx.copyright;
-  }
+    if (ctx.copyright) {
+      ctx = utils.merge({}, ctx, ctx.copyright);
+    }
 
-  var current = new Date().getFullYear();
-  var str = 'Copyright © ';
+    // start year of a project. if `year` is passed,
+    // create a date range
+    ctx.year = +(ctx.start || ctx.first || ctx.year);
 
-  if (ctx.copyright) {
-    ctx = merge(ctx, ctx.copyright);
-    ctx.year = ctx.first || ctx.year;
-  }
+    if (ctx.year && current && ctx.year < +current) {
+      str += ctx.year + '-' + current;
+    } else if (ctx.years) {
+      str += ctx.years;
+    } else {
+      str += current;
+    }
 
-  // start year of a project. if `year` is passed,
-  // create a date range
-  ctx.year = +(ctx.start || ctx.year);
+    // add author string
+    var author = (typeof ctx.author === 'string')
+      ? ctx.author
+      : ctx.author.name;
 
-  if (ctx.year && current && ctx.year < +current) {
-    str += ctx.year + '-' + current;
-  } else if (ctx.years) {
-    str += ctx.years;
-  } else {
-    str += current;
-  }
+    str += ' ' + author;
 
-  // add author string
-  var author = (typeof ctx.author === 'string')
-    ? ctx.author
-    : ctx.author.name;
-
-  str += ' ' + author;
-
-  if (ctx.linkify === true && (ctx.author.url || ctx.author.twitter)) {
-    var link = mdu.link(author, (ctx.author.url || ctx.author.twitter));
-    str = str.split(author).join(link);
-  }
-
-  if (app && app.set) {
-    app.set('data.copyright.statement', str);
-  }
-  return str;
+    if (ctx.linkify === true && (ctx.author.url || ctx.author.twitter)) {
+      var link = utils.link(author, (ctx.author.url || ctx.author.twitter));
+      str = str.split(author).join(link);
+    }
+    return str;
+  };
 };
