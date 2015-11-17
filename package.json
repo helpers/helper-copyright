@@ -3,21 +3,12 @@
   "description": "Template helper for adding a basic, one-line copyright statement, with formatting appropriate for LICENSE/LICENSE-MIT or README templates. Used with Verb, but should work with any Handlebars, Lo-Dash, underscore, or any template engine that allows helper functions to be registered.",
   "version": "1.4.0",
   "homepage": "https://github.com/helpers/helper-copyright",
-  "author": {
-    "name": "Jon Schlinkert",
-    "url": "https://github.com/jonschlinkert"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/helpers/helper-copyright.git"
-  },
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "helpers/helper-copyright",
   "bugs": {
     "url": "https://github.com/helpers/helper-copyright/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/helpers/helper-copyright/blob/master/LICENSE"
-  },
+  "license": "MIT",
   "files": [
     "index.js"
   ],
@@ -35,7 +26,7 @@
   "devDependencies": {
     "handlebars": "^3.0.0",
     "lodash": "^3.2.0",
-    "should": "^5.0.0"
+    "should": "*"
   },
   "keywords": [
     "assemble",
@@ -44,5 +35,15 @@
     "lodash",
     "template",
     "verb"
-  ]
+  ],
+  "verb": {
+    "related": {
+      "list": [
+        "verb",
+        "helper-related",
+        "helper-reflinks",
+        "helper-license"
+      ]
+    }
+  }
 }
