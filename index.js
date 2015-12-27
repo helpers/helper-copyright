@@ -59,13 +59,10 @@ module.exports = function(options) {
     }
 
     // add author string
-    var author = (typeof ctx.author === 'string')
-      ? ctx.author
-      : ctx.author.name;
+    var author = (typeof ctx.author === 'string') ? ctx.author : ctx.author.name;
+    str += ' ' + (author || '');
 
-    str += ' ' + author;
-
-    if (ctx.linkify === true && (ctx.author.url || ctx.author.twitter)) {
+    if (ctx.linkify === true && author && (ctx.author.url || ctx.author.twitter)) {
       var link = utils.link(author, (ctx.author.url || ctx.author.twitter));
       str = str.split(author).join(link);
     }
