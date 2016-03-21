@@ -14,58 +14,46 @@ var utils = require('./utils');
  *
  * ```js
  * {%= copyright() %}
- * //=> Copyright © 2014-2015, Jon Schlinkert.
+ * //=> Copyright © 2016, Jon Schlinkert.
  *
- * {%= copyright({year: 2012}) %}
- * //=> Copyright © 2012-2014 Jon Schlinkert.
+ * {%= copyright({year: 2013}) %}
+ * //=> Copyright © 2013, 2016 Jon Schlinkert.
  * ```
  *
  * @param  {Number} `year` Optionally pass the start year of the project.
  * @return {String} Complete copyright statement.
  */
 
-module.exports = function(options) {
-  var opts = utils.merge({}, options);
-
+module.exports = function(config) {
   return function copyright(locals) {
     var context = {};
+    var options = {};
+    var str = '';
+
     if (this && this.context) {
+      options = this.options;
       context = this.context;
+      str = context.view.content;
     }
 
-    var ctx = utils.merge({}, {author: {}}, opts, context, locals);
-
-    if (typeof ctx.copyright === 'string' && ctx.copyright.indexOf('Copyright') !== -1) {
-      return ctx.copyright;
+    var opts = utils.merge({}, config, options, context, locals);
+    if (typeof opts.author === 'string') {
+      opts.author = utils.parseAuthor(opts.author);
     }
 
-    var current = new Date().getFullYear();
-    var str = 'Copyright © ';
-
-    if (ctx.copyright) {
-      ctx = utils.merge({}, ctx, ctx.copyright);
-    }
-
-    // start year of a project. if `year` is passed,
-    // create a date range
-    ctx.year = +(ctx.start || ctx.first || ctx.year);
-
-    if (ctx.year && current && ctx.year < +current) {
-      str += ctx.year + '-' + current;
-    } else if (ctx.years) {
-      str += ctx.years;
+    if (opts.linkify === true) {
+      var origAuthor = opts.author.name;
+      opts.author = utils.link(opts.author.name, opts.author.url);
     } else {
-      str += current;
+      opts.author = opts.author.name;
     }
 
-    // add author string
-    var author = (typeof ctx.author === 'string') ? ctx.author : ctx.author.name;
-    str += ' ' + (author || '');
-
-    if (ctx.linkify === true && author && (ctx.author.url || ctx.author.twitter)) {
-      var link = utils.link(author, (ctx.author.url || ctx.author.twitter));
-      str = str.split(author).join(link);
+    opts.years = opts.start || opts.first || opts.year || opts.years || utils.year();
+    if (str === '') {
+      // this updated by update-copyright, we need at least a starting point
+      str = 'Copyright © ' + opts.years + ', ' + origAuthor;
     }
-    return str;
+
+    return utils.updateCopyright(str, opts);
   };
 };
