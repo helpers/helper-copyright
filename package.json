@@ -1,6 +1,6 @@
 {
   "name": "helper-copyright",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Template helper for adding a basic, one-line copyright statement, with formatting appropriate for LICENSE/LICENSE-MIT or README templates. Used with Verb, but should work with any Handlebars, Lo-Dash, underscore, or any template engine that allows helper functions to be registered.",
   "homepage": "https://github.com/helpers/helper-copyright",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
