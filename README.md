@@ -1,27 +1,24 @@
-# helper-copyright [![NPM version](https://badge.fury.io/js/helper-copyright.svg)](http://badge.fury.io/js/helper-copyright)  [![Build Status](https://travis-ci.org/helpers/helper-copyright.svg)](https://travis-ci.org/helpers/helper-copyright)
+# helper-copyright [![NPM version](https://img.shields.io/npm/v/helper-copyright.svg)](https://www.npmjs.com/package/helper-copyright) [![Build Status](https://img.shields.io/travis/helpers/helper-copyright.svg)](https://travis-ci.org/helpers/helper-copyright)
 
 > Template helper for adding a basic, one-line copyright statement, with formatting appropriate for LICENSE/LICENSE-MIT or README templates. Used with Verb, but should work with any Handlebars, Lo-Dash, underscore, or any template engine that allows helper functions to be registered.
 
 ## Install
 
-Install with [npm](https://www.npmjs.com/)
+Install with [npm](https://www.npmjs.com/):
 
 ```sh
-$ npm i helper-copyright --save
+$ npm install helper-copyright --save
 ```
 
 ## Usage
 
 ```js
 var copyright = require('helper-copyright');
-var hbs = require('handlebars');
+var handlebars = require('handlebars');
 
-// the top-level export is a function that must 
-// be called, so you can optionally pass an 
-// options object when registering the helper
-hbs.registerHelper('copyright', copyright({
-  linkify: true
-}));
+// the top-level export is a function that must be called, so you 
+// can optionally pass an options object when registering the helper
+handlebars.registerHelper('copyright', copyright({linkify: true}));
 ```
 
 ## Example
@@ -29,14 +26,14 @@ hbs.registerHelper('copyright', copyright({
 Add a copyright statement, with author and year(s) in effect (verb templates):
 
 ```js
-{%= copyright() %}
-//=> Copyright (c) 2014 Jon Schlinkert
+Copyright © 2016 [Jon Schlinkert](https://github.com/jonschlinkert)
+//=> Copyright (c) 2016 Jon Schlinkert
 
-{%= copyright({year: 2012}) %}
-//=> Copyright (c) 2012-2014 Jon Schlinkert
+Copyright © 2014-2016 [Jon Schlinkert](https://github.com/jonschlinkert)
+//=> Copyright (c) 2014-2016 Jon Schlinkert
 
-{%= copyright({year: 2012, linkify: true}) %}
-//=> Copyright (c) 2014 [Jon Schlinkert](https://github.com/jonschlinkert)
+Copyright © 2016 [Jon Schlinkert](https://github.com/jonschlinkert)
+//=> Copyright (c) 2016 [Jon Schlinkert](https://github.com/jonschlinkert)
 ```
 
 ## Examples
@@ -57,7 +54,7 @@ As a helper:
 _.template('<%= copyright({author: author}) %>', locals, {
   imports: {'copyright': require('helper-copyright')}
 });
-//=> Copyright (c) 2014 Jon Schlinkert
+//=> Copyright (c) 2016 Jon Schlinkert
 ```
 
 As a mixin:
@@ -65,7 +62,7 @@ As a mixin:
 ```js
 _.mixin({'copyright': require('helper-copyright')});
 _.template('<%= copyright({author: author}) %>', locals);
-//=> Copyright (c) 2014 Jon Schlinkert
+//=> Copyright (c) 2016 Jon Schlinkert
 ```
 
 ### [template](https://github.com/jonschlinkert/template)
@@ -74,7 +71,7 @@ _.template('<%= copyright({author: author}) %>', locals);
 template.helper('copyright', require('helper-copyright'));
 template.render('<%= copyright() %>', function(err, content) {
   console.log(content);
-  //=> Copyright (c) 2014 Jon Schlinkert'
+  //=> Copyright (c) 2016 Jon Schlinkert'
 });
 ```
 
@@ -84,7 +81,7 @@ template.render('<%= copyright() %>', function(err, content) {
 assemble.helper('copyright', require('helper-copyright'));
 assemble.render('{{copyright this}}', function(err, content) {
   console.log(content);
-  //=> Copyright (c) 2014 Jon Schlinkert'
+  //=> Copyright (c) 2016 Jon Schlinkert'
 });
 ```
 
@@ -92,9 +89,9 @@ assemble.render('{{copyright this}}', function(err, content) {
 
 ```js
 verb.helper('copyright', require('helper-copyright'));
-verb.render('{%= copyright() %}', function(err, content) {
+verb.render('Copyright © 2016 [Jon Schlinkert](https://github.com/jonschlinkert)', function(err, content) {
   console.log(content);
-  //=> Copyright (c) 2014 Jon Schlinkert'
+  //=> Copyright (c) 2016 Jon Schlinkert'
 });
 ```
 
@@ -104,7 +101,7 @@ verb.render('{%= copyright() %}', function(err, content) {
 var handlebars = require('handlebars');
 handlebars.registerHelper('copyright', require('helper-copyright'));
 handlebars.compile('{{copyright this}}')(locals);
-//=> Copyright (c) 2014 Jon Schlinkert
+//=> Copyright (c) 2016 Jon Schlinkert
 ```
 
 ## Related projects
@@ -114,30 +111,44 @@ handlebars.compile('{{copyright this}}')(locals);
 * [helper-related](https://www.npmjs.com/package/helper-related): Template helper for generating a list of links to the homepages of related GitHub/npm projects. | [homepage](https://github.com/helpers/helper-related)
 * [verb](https://www.npmjs.com/package/verb): Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used… [more](https://www.npmjs.com/package/verb) | [homepage](https://github.com/verbose/verb)
 
+## Contributing
+
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/jonschlinkert/helper-copyright/issues/new).
+
+## Building docs
+
+Generate readme and API documentation with [verb](https://github.com/verbose/verb):
+
+```sh
+$ npm install verb && npm run docs
+```
+
+Or, if [verb](https://github.com/verbose/verb) is installed globally:
+
+```sh
+$ verb
+```
+
 ## Running tests
 
 Install dev dependencies:
 
 ```sh
-$ npm i -d && npm test
+$ npm install -d && npm test
 ```
-
-## Contributing
-
-Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/helpers/helper-copyright/issues/new).
 
 ## Author
 
 **Jon Schlinkert**
 
-+ [github/jonschlinkert](https://github.com/jonschlinkert)
-+ [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
+* [github/jonschlinkert](https://github.com/jonschlinkert)
+* [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
 
 ## License
 
-Copyright © 2014-2015 Jon Schlinkert
-Released under the MIT license.
+Copyright © 2016 [Jon Schlinkert](https://github.com/jonschlinkert)
+Released under the [MIT license](https://github.com/helpers/helper-copyright/blob/master/LICENSE).
 
 ***
 
-_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on November 17, 2015._
+_This file was generated by [verb](https://github.com/verbose/verb), v0.9.0, on March 21, 2016._
