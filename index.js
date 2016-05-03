@@ -28,12 +28,10 @@ module.exports = function(config) {
   return function copyright(locals) {
     var context = {};
     var options = {};
-    var str = '';
 
     if (this && this.context) {
       options = this.options;
       context = this.context;
-      str = context.view.content;
     }
 
     var opts = utils.merge({}, config, options, context, locals);
@@ -49,10 +47,7 @@ module.exports = function(config) {
     }
 
     opts.years = opts.start || opts.first || opts.year || opts.years || utils.year();
-    if (str === '') {
-      // this updated by update-copyright, we need at least a starting point
-      str = 'Copyright © ' + opts.years + ', ' + origAuthor;
-    }
+    var str = 'Copyright © ' + opts.years + ', ' + origAuthor;
 
     return utils.updateCopyright(str, opts);
   };
