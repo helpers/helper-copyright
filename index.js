@@ -39,7 +39,7 @@ module.exports = function(config) {
       opts.author = utils.parseAuthor(opts.author);
     }
 
-    if (opts.linkify === true) {
+    if (opts.linkify === true && opts.author.url) {
       var origAuthor = opts.author.name;
       opts.author = utils.link(opts.author.name, opts.author.url);
     } else {
